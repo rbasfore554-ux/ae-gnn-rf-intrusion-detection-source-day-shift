@@ -1,22 +1,24 @@
 # Hybrid AE–GNN–RF IDS Research
 
-A reproducible research repository for evaluating an Autoencoder + Graph Convolutional Network (GCN) + Random Forest pipeline for binary intrusion detection on CIC-IDS2017.
+A research repository documenting an Autoencoder (AE) + Graph Convolutional Network (GCN) + Random Forest pipeline for binary intrusion detection using the CIC-IDS2017 dataset.
 
-## Status
+> **Research status:** the current results do not show that AE–GNN–RF outperforms the AE+RF baseline overall. The repository reports that honestly and identifies controlled follow-up experiments to test whether graph-derived relational features improve a specific cybersecurity objective.
 
-This repository documents completed experiments and includes notebooks, figures, metrics, and dataset-cleaning audit outputs. It does **not** claim that the AE–GNN–RF fusion model outperforms the AE+RF baseline on overall metrics. Further testing is needed to establish whether relational features provide a benefit under specific cybersecurity objectives.
+## Architecture
 
-## Key architecture
+![AE–GNN–RF architecture](figures/architecture_72d_zh_fusion.svg)
 
-- **Input:** 72 numeric traffic features after cleaning and exclusion of identifier/time fields.
-- **Autoencoder:** 72 → 128 → 32 encoder; decoder 32 → 128 → 72.
-- **Graph:** k-nearest neighbours (k = 10, Euclidean distance) over the Autoencoder representation.
-- **GCN:** 32 → 16 → 2; the 16-dimensional hidden representation is denoted by `H`.
-- **Fusion:** `F = [Z || H]`, where `Z` is the 32-dimensional Autoencoder representation; fused dimension = 48.
-- **Classifier:** Random Forest, 100 trees, maximum depth 15, `max_features=sqrt`, balanced class weights.
-- **Decision threshold:** 0.4221, selected using validation data with F2 as the objective and then fixed for test evaluation.
+- **Input:** 72 numeric traffic features after cleaning and exclusion of identifier/time columns.
+- **Autoencoder:** encoder 72 → 128 → 32; decoder 32 → 128 → 72. The 32-dimensional latent representation is **Z**.
+- **Graph:** k-nearest-neighbour graph over Z, with k = 10 and Euclidean distance.
+- **GCN:** two layers, 32 → 16 → 2. The 16-dimensional hidden representation is **H**.
+- **Fusion:** **F = [Z || H]**, giving 48 features.
+- **Classifier:** Random Forest with 100 trees, max depth 15, `max_features="sqrt"`, balanced class weights, random state 42.
+- **Threshold:** 0.4221336, selected on validation data by maximising F2, then frozen for final test evaluation.
 
-## Reported final test result: `[Z || H]` fusion
+**Important implementation detail:** in the reported experiment, the AE was trained on the full training split, including benign and attack flows; it was not trained exclusively on benign samples.
+
+## Final reported test result: [Z || H] fusion
 
 | Metric | Result |
 |---|---:|
@@ -25,42 +27,52 @@ This repository documents completed experiments and includes notebooks, figures,
 | Attack recall | 98.8429% |
 | F1-score | 94.6601% |
 | ROC-AUC | 0.998172 |
-| Average precision (PR/AP) | 0.992614 |
-| False-positive rate | 2.4492% |
-| False-negative rate | 1.1571% |
+| Average precision (AP) | 0.992614 |
+| False-positive rate (FPR) | 2.4492% |
+| False-negative rate (FNR) | 1.1571% |
 | Balanced accuracy | 98.1968% |
 
-Confusion matrix: TN = 443,100; FP = 11,125; FN = 1,288; TP = 110,023.
+The held-out test set contains 565,536 flows: 454,225 benign and 111,311 attack flows. The confusion matrix is TN = 443,100, FP = 11,125, FN = 1,288, TP = 110,023.
 
-The test set contains 565,536 flows: 454,225 benign and 111,311 attack flows.
+![Final fusion confusion matrix](figures/final_zh_confusion_matrix.svg)
 
-## Interpretation and scientific caution
+## Baseline comparison
 
-The AE+RF baseline is slightly stronger overall in the experiments reported here (approximately 97.93% accuracy, 94.96% F1, and 1.05% FNR). The contribution examined here is whether graph-derived relational information can complement the AE representation, not a demonstrated overall performance win. Proposed follow-up experiments include comparing false-positive rates at a fixed target attack recall, per-attack analysis, and cross-day generalisation with strict train/validation/test separation.
+![Reported baseline comparison](figures/model_comparison.svg)
+
+The AE+RF baseline is slightly stronger on current overall results: about 97.93% accuracy, 94.96% F1, 98.95% attack recall, and 1.05% FNR. The [Z || H] fusion is much stronger than the RF(H)-only experiment in the reported comparison, but it does not establish an overall win over AE+RF.
+
+The scientific question for the next experiment is whether the GNN gives a measurable benefit under a defined condition, such as a **fixed target attack recall with lower FPR**, better detection of particular attack classes, or stronger cross-day generalisation. Any threshold must be selected with validation data, not tuned against the final test set.
 
 ## Repository layout
 
-- `notebooks/01_full_experiment_pipeline.ipynb` — combined experiment and ablation notebook.
-- `notebooks/02_cicids2017_cleaning_audit.ipynb` — source-file and cleaning audit notebook.
-- `figures/` — architecture and final-fusion evaluation figures.
-- `results/` — reported metrics, model comparison and audit CSVs.
-- `docs/RESEARCH_STATUS.md` — completed work and outstanding limitations.
-- `docs/REPRODUCIBILITY.md` — environment and reproduction notes.
+- `notebooks/01_results_and_metrics_audit.ipynb` — inspects committed result tables, recomputes selected metrics from the confusion matrix, and visualises the reported comparison.
+- `notebooks/02_cicids2017_cleaning_audit.ipynb` — audits locally stored CIC-IDS2017 CSVs and documents cleaning steps.
+- `figures/` — text-based SVG architecture, confusion matrix, and model-comparison figures.
+- `results/` — reported metrics, ablation comparison, class counts and cleaning-audit CSVs.
+- `docs/RESEARCH_STATUS.md` — claims supported by the current experiment and outstanding research questions.
+- `docs/REPRODUCIBILITY.md` — recorded configuration and environment notes.
 
-## Reproduce
+The notebooks in this repository audit the stored results and data-cleaning process; they **do not rerun the complete historic training pipeline**. The committed metrics are records of the previously completed experiment, not evidence that training was freshly reproduced from this repository.
 
-1. Use Python 3.10 or a compatible environment.
-2. Install dependencies with `pip install -r requirements.txt`.
-3. Download CIC-IDS2017 independently from its official distribution and place source CSVs in the local data directory described in the cleaning notebook.
-4. Review the notebook's configuration paths before running.
-5. Execute the cleaning audit, then the experiment notebook in order.
+## Data cleaning and limitations
 
-The raw dataset and trained model checkpoints are not committed. The reported notebook results are records of prior experiments and are not proof of a fresh rerun in every environment. The full experiment is memory-intensive; adjust chunk sizes and sampled graph sizes only when documenting the change and interpreting results.
+The recorded merge contained 3,119,345 rows and 85 columns including the label. Removing rows containing missing/non-finite values left 2,827,876 rows. Removing 199 duplicate rows left 2,827,677 rows, with 2,271,122 benign and 556,555 attack flows. Eight constant non-label columns were removed; four non-numeric identifier/time fields (Flow ID, Source IP, Destination IP, Timestamp) were excluded from model inputs, leaving 72 numeric features.
 
-## Data cleaning note
+The Thursday Web Attacks CSV had a substantial data-quality issue: 288,602 missing-label rows, 288,622 rows with any missing value, and 135 rows with an infinite numeric value (20 overlap with rows containing missing values). The cleaning rule removed the union of these cases from that file. Confirm the exact source files and cleaning policy before treating the cleaned data as definitive.
 
-The reported merged input consisted of 3,119,345 rows and 85 columns (including the label). Rows containing missing or non-finite values were removed, constant columns were dropped, and 199 duplicate rows were removed, leaving 2,827,677 rows and 72 numeric model features. The Thursday Web Attacks source file had a substantial missing-label/missing-value issue in the audit; review the CSVs in `results/` and verify the dataset source/cleaning policy before treating the dataset as definitive.
+The stored result files describe a single dataset and one evaluation setup. They do not establish deployment latency, online detection capability, cross-day generalisation, or performance on unseen attack families. The full training workload is memory-intensive. Any changed split, sampling, batching, or preprocessing must be documented as a different run.
+
+## Reproduce the audits
+
+1. Create a Python environment and install `requirements.txt`.
+2. Download CIC-IDS2017 independently from its official distribution.
+3. Put the eight source CSVs under `data/raw/` (the raw data is ignored by Git and is not included here).
+4. Launch Jupyter from the repository root.
+5. Run the cleaning-audit notebook and check the observed counts against the committed audit CSVs. Investigate discrepancies rather than adjusting data to force a match.
+
+The exact historical run should be treated as not fully reproduced until the training pipeline is rerun from raw data in a clean environment and all results are independently verified.
 
 ## License
 
-MIT. See `LICENSE`.
+MIT. See [LICENSE](LICENSE).
