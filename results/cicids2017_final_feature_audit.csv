@@ -1,0 +1,4 @@
+feature_group,count,notes
+constant_non_label_columns_removed,8,Columns without useful variation were dropped
+non_numeric_identifiers_excluded,4,"Flow ID, Source IP, Destination IP, Timestamp"
+numeric_model_features,72,Final Autoencoder input dimensions
