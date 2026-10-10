@@ -1,0 +1,6 @@
+stage,rows,columns,notes
+raw_merged,3119345,85,8 source CSVs merged including label column
+after_missing_and_nonfinite_cleanup,2827876,85,291469 rows removed
+after_constant_column_removal,2827876,77,8 constant non-label columns removed; 76 non-label columns remain
+after_deduplication,2827677,77,199 duplicate rows removed
+numeric_model_features,2827677,72,identifier and timestamp fields excluded from numeric model input
