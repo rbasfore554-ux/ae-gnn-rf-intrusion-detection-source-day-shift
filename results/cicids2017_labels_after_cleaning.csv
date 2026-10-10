@@ -1,3 +1,16 @@
-label,count
-Benign,2271320
-Attack,556556
+Raw_label,Rows
+BENIGN,2271320
+DoS Hulk,230124
+PortScan,158804
+DDoS,128025
+DoS GoldenEye,10293
+FTP-Patator,7935
+SSH-Patator,5897
+DoS slowloris,5796
+DoS Slowhttptest,5499
+Bot,1956
+Web Attack  Brute Force,1507
+Web Attack  XSS,652
+Infiltration,36
+Web Attack  Sql Injection,21
+Heartbleed,11

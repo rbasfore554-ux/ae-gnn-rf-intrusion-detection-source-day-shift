@@ -1,25 +1,24 @@
-# Raw CIC-IDS2017 files and locally generated data
-data/
-*.csv.gz
-*.parquet
-*.feather
+# Raw/processed datasets (do not commit CIC-IDS2017 data)
+data/raw/
+data/processed/
 
-# Model checkpoints and large arrays
-models/
-checkpoints/
-*.h5
-*.keras
-*.pt
+# Model checkpoints, local outputs, and large binaries
+outputs/
+saved_models/
 *.pth
+*.pt
+*.ckpt
 *.joblib
 *.pkl
-*.npy
-*.npz
 
-# Python environments and caches
+# Python/Jupyter
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
 .venv/
 venv/
-__pycache__/
-.ipynb_checkpoints/
-.DS_Store
 .env
+.DS_Store
+
+# Temporary logs
+*.log

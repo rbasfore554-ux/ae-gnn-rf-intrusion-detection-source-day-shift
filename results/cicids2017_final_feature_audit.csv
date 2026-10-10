@@ -1,4 +1,77 @@
-feature_group,count,notes
-constant_non_label_columns_removed,8,Columns without useful variation were dropped
-non_numeric_identifiers_excluded,4,"Flow ID, Source IP, Destination IP, Timestamp"
-numeric_model_features,72,Final Autoencoder input dimensions
+Feature,Dtype_after_cleaning,Unique_values_after_cleaning,Used_by_numeric_only_pipeline
+Flow ID,object,1084637,False
+Source IP,object,17002,False
+Source Port,float64,64638,True
+Destination IP,object,19112,False
+Destination Port,float64,53791,True
+Protocol,float64,3,True
+Timestamp,object,27964,False
+Flow Duration,float64,1050898,True
+Total Fwd Packets,float64,1432,True
+Total Backward Packets,float64,1747,True
+Total Length of Fwd Packets,float64,17928,True
+Total Length of Bwd Packets,float64,64698,True
+Fwd Packet Length Max,float64,5279,True
+Fwd Packet Length Min,float64,384,True
+Fwd Packet Length Mean,float64,109708,True
+Fwd Packet Length Std,float64,254414,True
+Bwd Packet Length Max,float64,4838,True
+Bwd Packet Length Min,float64,583,True
+Bwd Packet Length Mean,float64,154879,True
+Bwd Packet Length Std,float64,249232,True
+Flow Bytes/s,float64,1595301,True
+Flow Packets/s,float64,1242325,True
+Flow IAT Mean,float64,1170616,True
+Flow IAT Std,float64,1057058,True
+Flow IAT Max,float64,580288,True
+Flow IAT Min,float64,136316,True
+Fwd IAT Total,float64,493098,True
+Fwd IAT Mean,float64,739085,True
+Fwd IAT Std,float64,700373,True
+Fwd IAT Max,float64,437316,True
+Fwd IAT Min,float64,110631,True
+Bwd IAT Total,float64,414928,True
+Bwd IAT Mean,float64,672108,True
+Bwd IAT Std,float64,709055,True
+Bwd IAT Max,float64,368285,True
+Bwd IAT Min,float64,66074,True
+Fwd PSH Flags,float64,2,True
+Fwd URG Flags,float64,2,True
+Fwd Header Length,float64,3771,True
+Bwd Header Length,float64,3945,True
+Fwd Packets/s,float64,1222760,True
+Bwd Packets/s,float64,1109984,True
+Min Packet Length,float64,215,True
+Max Packet Length,float64,5708,True
+Packet Length Mean,float64,227460,True
+Packet Length Std,float64,413458,True
+Packet Length Variance,float64,408646,True
+FIN Flag Count,float64,2,True
+SYN Flag Count,float64,2,True
+RST Flag Count,float64,2,True
+PSH Flag Count,float64,2,True
+ACK Flag Count,float64,2,True
+URG Flag Count,float64,2,True
+CWE Flag Count,float64,2,True
+ECE Flag Count,float64,2,True
+Down/Up Ratio,float64,31,True
+Average Packet Size,float64,212207,True
+Avg Fwd Segment Size,float64,99719,True
+Avg Bwd Segment Size,float64,147611,True
+Fwd Header Length.1,float64,3771,True
+Subflow Fwd Packets,float64,1432,True
+Subflow Fwd Bytes,float64,17928,True
+Subflow Bwd Packets,float64,1747,True
+Subflow Bwd Bytes,float64,64738,True
+Init_Win_bytes_forward,float64,12144,True
+Init_Win_bytes_backward,float64,13110,True
+act_data_pkt_fwd,float64,1093,True
+min_seg_size_forward,float64,28,True
+Active Mean,float64,326638,True
+Active Std,float64,202829,True
+Active Max,float64,299565,True
+Active Min,float64,175670,True
+Idle Mean,float64,222137,True
+Idle Std,float64,197617,True
+Idle Max,float64,149737,True
+Idle Min,float64,223888,True

@@ -1,3 +1,9 @@
-source_file,raw_rows,missing_label_rows,rows_any_missing,rows_any_infinite,missing_infinite_overlap,rows_removed_union,rows_retained
-Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,458968,288602,288622,135,20,288737,170231
-Other merged source CSVs,2660377,,,,,,2657645
+File,Raw_rows,Raw_columns,Missing_cells_before_cleaning,Infinite_numeric_cells_before_cleaning,Rows_with_any_missing_value,Rows_with_any_infinity,Rows_with_both_missing_and_infinity,Rows_removed_by_replace_inf_then_dropna,Rows_retained_after_current_cleaning,Clean_BENIGN_exact_label_rows,Clean_non_BENIGN_exact_label_rows
+Monday-WorkingHours.pcap_ISCX.csv,529918,85,64,810,64,437,64,437,529481,529481,0
+Tuesday-WorkingHours.pcap_ISCX.csv,445909,85,201,327,201,264,201,264,445645,431813,13832
+Wednesday-workingHours.pcap_ISCX.csv,692703,85,1008,1586,1008,1297,1008,1297,691406,439683,251723
+Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,458968,85,24531190,250,288622,135,20,288737,170231,168051,2180
+Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv,288602,85,18,396,18,207,18,207,288395,288359,36
+Friday-WorkingHours-Morning.pcap_ISCX.csv,191033,85,28,216,28,122,28,122,190911,188955,1956
+Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv,286467,85,15,727,15,371,15,371,286096,127292,158804
+Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv,225745,85,4,64,4,34,4,34,225711,97686,128025

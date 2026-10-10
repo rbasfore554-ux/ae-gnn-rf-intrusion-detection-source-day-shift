@@ -1,6 +1,19 @@
-stage,rows,columns,notes
-raw_merged,3119345,85,8 source CSVs merged including label column
-after_missing_and_nonfinite_cleanup,2827876,85,291469 rows removed
-after_constant_column_removal,2827876,77,8 constant non-label columns removed; 76 non-label columns remain
-after_deduplication,2827677,77,199 duplicate rows removed
-numeric_model_features,2827677,72,identifier and timestamp fields excluded from numeric model input
+Audit_item,Observed_value
+Raw merged rows,3119345
+Raw columns including label,85
+Missing cells before cleaning,24532528
+Infinite numeric cells before cleaning,4376
+Rows dropped by current NaN/Inf cleaning rule,291469
+Rows retained after NaN/Inf cleaning,2827876
+Feature columns before constant removal (target excluded),84
+Constant columns removed,8
+Columns remaining after constant removal,76
+Duplicate rows removed,199
+Final rows after duplicate removal,2827677
+Final benign rows,2271122
+Final attack rows,556555
+Train rows,1809712
+Validation rows,452429
+Test rows,565536
+Numeric features actually used by AE,72
+Frozen manuscript claim: numeric features,76

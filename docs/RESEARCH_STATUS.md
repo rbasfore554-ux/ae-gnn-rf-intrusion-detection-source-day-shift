@@ -1,25 +1,16 @@
-# Research status
+# Research status and next experiments
 
-## Completed experiment
+## Current supported conclusion
 
-The reported binary intrusion-detection experiment uses CIC-IDS2017 with 72 numeric flow features. A 72-to-32 Autoencoder representation, Z, is combined with a 16-dimensional hidden representation, H, from a two-layer GCN trained on a k-nearest-neighbour graph constructed over Z. A Random Forest classifies the 48-dimensional concatenation [Z || H].
+The recorded AE–GNN–RF `[Z || H]` fusion result achieves 97.81% accuracy, 98.84% attack recall and 94.66% F1. It improves substantially over an RF classifier using the GNN hidden embedding `H` alone. The AE+RF baseline remains slightly stronger on the current aggregate benchmark metrics, including FNR.
 
-The reported operating threshold is 0.4221, selected using validation data with F2 as the objective and then frozen for test evaluation.
+Therefore, the current evidence does not support a claim that GNN addition is universally beneficial or that the fusion model outperforms AE+RF overall.
 
-## Main result
+## Planned follow-up work (not yet implemented/evaluated)
 
-The [Z || H] fusion result is: accuracy 97.8051%, attack precision 90.817%, attack recall 98.8429%, F1 94.6601%, ROC-AUC 0.998172, average precision 0.992614, FPR 2.4492%, and FNR 1.1571%. Test confusion matrix: TN 443100, FP 11125, FN 1288, TP 110023.
+1. **Fixed-recall operating point:** choose a target attack recall on validation, then compare false-positive rates on held-out test data at that target. Report how many false alarms are introduced for the same detection objective.
+2. **Attack-specific analysis:** report precision/recall/FNR by attack family and investigate whether the GNN recovers specific attacks missed by AE+RF.
+3. **Cross-day/source-file generalization:** train/validate using one set of traffic periods and test on a disjoint day/source file.
+4. **Independent final test:** after choosing variants/thresholds without test feedback, evaluate once on a truly untouched split or external dataset.
 
-## Interpretation
-
-The AE+RF baseline is slightly stronger overall on the current reported results: accuracy about 97.93%, F1 about 94.96%, and FNR about 1.05%. The evidence therefore does not support saying the GNN hybrid is the best model overall. The experiment investigates whether relational features can complement AE features and substantially recover the loss seen with RF(H) alone.
-
-## Outstanding research questions
-
-- Compare false-positive rate at a fixed, validation-selected target attack recall.
-- Evaluate per-attack detection and identify attack categories missed by each model.
-- Test cross-day generalisation with a strict split that prevents information leakage.
-- Verify and document the source dataset/cleaning choice because the Thursday Web Attacks CSV had extensive missing-label/missing-value issues in the audit.
-- Re-run the experiment from a clean environment before claiming independent reproducibility.
-
-The submitted manuscript is outside the scope of this repository update and is not being revised here.
+These are research plans, not completed results. The manuscript previously shared with the supervisor is not included or modified by this repository package.
