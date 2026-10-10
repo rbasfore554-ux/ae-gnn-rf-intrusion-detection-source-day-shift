@@ -1,0 +1,3 @@
+source_file,raw_rows,missing_label_rows,rows_any_missing,rows_any_infinite,missing_infinite_overlap,rows_removed_union,rows_retained
+Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,458968,288602,288622,135,20,288737,170231
+Other merged source CSVs,2660377,,,,,,2657645
