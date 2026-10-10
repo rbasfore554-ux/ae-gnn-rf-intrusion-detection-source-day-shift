@@ -1,0 +1,2 @@
+model,accuracy,attack_precision,attack_recall,f1,roc_auc,average_precision,fpr,fnr
+AE+GNN+RF [Z,re,H],0.9774,0.9048,0.9895,0.9452,0.99819,0.99271,0.0255,0.0105
