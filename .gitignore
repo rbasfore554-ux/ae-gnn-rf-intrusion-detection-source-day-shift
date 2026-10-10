@@ -1,0 +1,25 @@
+# Raw CIC-IDS2017 files and locally generated data
+data/
+*.csv.gz
+*.parquet
+*.feather
+
+# Model checkpoints and large arrays
+models/
+checkpoints/
+*.h5
+*.keras
+*.pt
+*.pth
+*.joblib
+*.pkl
+*.npy
+*.npz
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+.env
