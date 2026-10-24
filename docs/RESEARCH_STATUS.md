@@ -18,7 +18,7 @@ The Friday source-day stress test trains on Monday–Thursday, then evaluates on
 
 ## Remaining work — in order
 
-1. Run a diagnostic against the original Thursday Morning WebAttacks CSV. Review missing values per column, infinities, label mix before/after filtering, and exact duplicates. Do not alter historical results silently.
+1. Run scripts/audit_thursday_webattacks.py against the original Thursday Morning WebAttacks CSV. Review missing values per column, infinities, label mix before/after filtering, CSV field-count mismatches, and duplicate fingerprints. Verify any duplicate finding exactly if it affects a conclusion. Do not alter historical results silently.
 2. Keep evaluation on other datasets as future work; the current manuscript is intentionally limited to CIC-IDS2017.
 3. Decide whether repeated-seed confidence intervals are feasible without changing the frozen protocol; if run, document them as within-dataset robustness checks, not external validation.
 4. Measure time, peak memory, and inference protocol constraints if feasible; current GCN builds a graph over the complete evaluation cohort, so it is offline cohort inference, not streaming.
