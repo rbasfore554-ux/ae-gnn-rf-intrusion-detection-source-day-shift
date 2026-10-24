@@ -1,16 +1,33 @@
 # Research status and next experiments
 
-## Current supported conclusion
+## Current evidence and supported conclusion
 
-The recorded AE–GNN–RF `[Z || H]` fusion result achieves 97.81% accuracy, 98.84% attack recall and 94.66% F1. It improves substantially over an RF classifier using the GNN hidden embedding `H` alone. The AE+RF baseline remains slightly stronger on the current aggregate benchmark metrics, including FNR.
+The repository contains multiple recorded protocols. Keep the archived random-split run, the later aligned random-split comparison, and the Friday source-day stress test in separate tables; thresholds and metrics from one run must not be substituted into another.
 
-Therefore, the current evidence does not support a claim that GNN addition is universally beneficial or that the fusion model outperforms AE+RF overall.
+In the newer aligned random-split comparison (565,536 test flows), AE+RF [Z,re] has the strongest overall aggregate metrics among the RF variants: accuracy 97.97%, precision 91.51%, recall 98.87%, F1 95.05%, ROC-AUC 0.9984 and FPR 2.25%. AE–GNN–RF [Z,re,H] reaches 98.98% recall, but its precision (90.31%), F1 (94.45%), accuracy (97.71%) and FPR (2.60%) are worse. The random test partition was inspected during prior exploration, so this result is exploratory.
 
-## Planned follow-up work (not yet implemented/evaluated)
+The Friday source-day stress test trains on Monday–Thursday, then evaluates on 702,713 Friday flows at thresholds selected on development validation. At the validation-selected F2 thresholds, attack recall is 26.99% for AE+RF [Z,re] and 27.11% for full fusion. Bot, DDoS and PortScan were absent from the Monday–Thursday development training pool. Friday was inspected in earlier experiments, so this is also an exploratory stress test rather than untouched confirmation. It shows that random-split scores do not establish cross-day robustness.
 
-1. **Fixed-recall operating point:** choose a target attack recall on validation, then compare false-positive rates on held-out test data at that target. Report how many false alarms are introduced for the same detection objective.
-2. **Attack-specific analysis:** report precision/recall/FNR by attack family and investigate whether the GNN recovers specific attacks missed by AE+RF.
-3. **Cross-day/source-file generalization:** train/validate using one set of traffic periods and test on a disjoint day/source file.
-4. **Independent final test:** after choosing variants/thresholds without test feedback, evaluate once on a truly untouched split or external dataset.
+## Completed follow-up analyses
 
-These are research plans, not completed results. The manuscript previously shared with the supervisor is not included or modified by this repository package.
+- Fixed-validation-recall sensitivity comparison at targets 0.980, 0.985, 0.988, 0.989 and 0.990.
+- Friday attack-family recall for Bot, DDoS and PortScan.
+- Confusion-matrix and metric consistency checks for the six Friday models.
+- Frozen source-day configuration and result tables audited locally; summary is in docs/FRIDAY_SOURCE_DAY_HOLDOUT_AUDIT.md.
+- Thursday source-file cleaning anomaly documented: 288,737 of 458,968 rows from Thursday Morning WebAttacks were excluded by the all-column missing/non-finite filter. The excluded rows' detailed missingness and label composition still require audit on the original source CSV.
+
+## Remaining work — in order
+
+1. Run a diagnostic against the original Thursday Morning WebAttacks CSV. Review missing values per column, infinities, label mix before/after filtering, and exact duplicates. Do not alter historical results silently.
+2. Perform a cross-dataset compatibility audit for CSE-CIC-IDS2018 (or another external labelled-flow dataset). Map names, definitions and units to the frozen 72-feature schema before evaluating. Never fit preprocessing or choose thresholds using external test labels.
+3. If a valid frozen-model feature map is defensible, run external evaluation once, report failures as well as successes, and archive feature maps/hashes/metrics. If not, state that cross-dataset evaluation is not valid with the current frozen schema.
+4. Repeat the aligned protocol across multiple seeds and report confidence intervals.
+5. Measure time, peak memory, and inference protocol constraints; current GCN builds a graph over the complete evaluation cohort, so it is offline cohort inference, not streaming.
+6. Complete manuscript authorship/declarations and target-journal formatting after supervisor review.
+
+## Guardrails
+
+- Do not repeatedly tune against Friday.
+- Do not claim graph fusion improves the overall aggregate trade-off.
+- Do not describe either previously inspected test partition as a pristine confirmatory test.
+- Do not upload public CIC datasets, raw traffic, or trained checkpoint binaries to this repository.
