@@ -14,7 +14,7 @@ The principal fused model is:
 
 The notebook also evaluates an H-only RF baseline and a supplementary `[Z || reconstruction error || H]` (49-D) variant.
 
-## Recorded result for `[Z || H]`
+## Archived result for [Z || H] (separate experiment protocol)
 
 The final recorded fusion run evaluated **565,536 test flows** using a validation-selected decision threshold of **0.4221336**.
 
@@ -45,7 +45,7 @@ Confusion matrix (rows = actual; columns = predicted):
 
 *Metric note:* the stored `PR_AUC` value was computed with scikit-learn's `average_precision_score`, so this README calls it **Average Precision (AP)** rather than implying trapezoidal integration of the precision–recall curve.
 
-## Ablation and fusion comparison
+## Archived ablation and fusion comparison (separate protocol)
 
 All metrics below come from the recorded benchmark runs. The `model_comparison.csv` file stores metric scores as fractions from 0 to 1, and confusion-matrix entries as counts.
 
@@ -59,7 +59,44 @@ All metrics below come from the recorded benchmark runs. The `model_comparison.c
 
 ![Model comparison chart](figures/model_comparison.png)
 
-**Interpretation:** adding `Z` back to the GNN embedding substantially improves the H-only hybrid in the recorded experiment. However, **AE+RF remains slightly stronger overall** on accuracy, precision, recall, F1, ROC-AUC, and FNR. We therefore do not claim general superiority for the GNN. The next research step is to test the models at a fixed target recall, compare per-attack performance, and evaluate on traffic from a different day/source.
+**Interpretation of the archived comparison:** adding Z back to the GNN embedding improves the H-only hybrid in that run, but **AE+RF remains stronger overall** on the listed aggregate metrics. Later aligned and source-day experiments are separate protocols summarized below. Fixed-recall and attack-family analyses have now been run; external validation and the Thursday cleaning audit remain open.
+
+
+## Aligned comparison and Friday source-day stress test
+
+The newer results below use different protocols from the archived result above. Do not combine thresholds or metric values across protocols.
+
+### Aligned random-split benchmark (exploratory)
+
+All variants used a shared 100,000-node validation sample and the same 565,536-flow random-split test partition. This test partition had been inspected in earlier exploration, so it is not an untouched confirmatory test.
+
+| Model | Accuracy | Precision | Attack recall | F1 | ROC-AUC | FPR | FNR |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| AE reconstruction error | 34.11% | 22.75% | 97.97% | 36.92% | 0.6646 | 81.54% | 2.03% |
+| AE+RF [Z,re] | 97.97% | 91.51% | 98.87% | 95.05% | 0.9984 | 2.25% | 1.13% |
+| AE+GNN direct scores | 73.89% | 42.47% | 92.16% | 58.15% | 0.8755 | 30.59% | 7.84% |
+| AE+GNN+RF [H] | 96.13% | 84.85% | 97.80% | 90.87% | 0.9952 | 4.28% | 2.20% |
+| AE+GNN+RF [Z,H] | 97.81% | 90.87% | 98.82% | 94.68% | 0.9982 | 2.43% | 1.19% |
+| AE+GNN+RF [Z,re,H] | 97.71% | 90.31% | 98.98% | 94.45% | 0.9982 | 2.60% | 1.02% |
+
+### Friday source-day stress test (exploratory)
+
+AE/GCN/RF were fitted on Monday–Thursday development data; thresholds were selected on development validation; and all 702,713 Friday flows were evaluated as one cohort. Friday was inspected in earlier experiments, so this is a stress test rather than untouched independent confirmation. Bot (1,956 rows), DDoS (128,025 rows), and PortScan (158,804 rows) were absent from the Monday–Thursday development pool.
+
+| Model | Accuracy | Precision | Attack recall | F1 | ROC-AUC | FPR | FNR |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| AE reconstruction error | 62.14% | 58.19% | 27.95% | 37.76% | 0.5608 | 14.01% | 72.05% |
+| AE+RF [Z,re] | 69.56% | 96.22% | 26.99% | 42.15% | 0.7595 | 0.74% | 73.01% |
+| AE+GNN direct scores | 69.55% | 93.49% | 27.85% | 42.91% | 0.7715 | 1.35% | 72.15% |
+| AE+GNN+RF [H] | 69.09% | 91.60% | 27.28% | 42.04% | 0.8013 | 1.75% | 72.72% |
+| AE+GNN+RF [Z,H] | 69.56% | 96.03% | 27.05% | 42.20% | 0.7004 | 0.78% | 72.95% |
+| AE+GNN+RF [Z,re,H] | 69.60% | 96.16% | 27.11% | 42.29% | 0.7746 | 0.76% | 72.89% |
+
+At the F2-selected validation thresholds, all evaluated models missed about 72–73% of Friday attacks. Bot recall ranged from 0 to 5.06%, DDoS recall from 60.75 to 62.75%, and PortScan recall from 0.05 to 0.97%. These results should be reported alongside the random-split metrics.
+
+At a validation target recall of 98.8%, test recall was 25.96% for AE+RF [Z,re] (FPR 0.64%) and 26.86% for full fusion [Z,re,H] (FPR 0.71%). Direct AE+GNN reached 99.77% recall but produced a 96.80% FPR. Threshold transfer therefore failed for this source-day shift.
+
+See docs/FRIDAY_SOURCE_DAY_HOLDOUT_AUDIT.md for interpretation and limitations. The GCN graph is built across the whole evaluation cohort, so this is offline cohort inference, not a streaming evaluation. External dataset validation, repeated-seed confidence intervals, and latency/throughput measurements are still outstanding.
 
 ## Dataset and preprocessing audit
 
