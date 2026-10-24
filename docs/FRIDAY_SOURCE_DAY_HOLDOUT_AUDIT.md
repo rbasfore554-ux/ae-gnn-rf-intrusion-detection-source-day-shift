@@ -48,5 +48,5 @@ The current source-day cleaning procedure removes 288,737 of 458,968 rows from T
 
 - Friday was consulted during prior exploration; do not tune repeatedly against it or call it an untouched independent test.
 - The GCN graph is built over the full evaluation cohort; the experiment measures offline cohort inference, not one-flow-at-a-time online detection.
-- External validation, repeated-seed confidence intervals, and latency/throughput measurements remain outstanding.
-- CIC-IDS2018 is a candidate for external evaluation, but the frozen 72-feature schema must be matched by feature meaning and units before any scores are valid; external test labels must not be used for fitting or threshold selection.
+- The current manuscript is intentionally scoped to CIC-IDS2017; evaluation on another dataset is future work, not a submission prerequisite for this version.
+- Repeated-seed confidence intervals and latency/throughput measurements remain possible additional within-dataset checks, subject to compute and time.
