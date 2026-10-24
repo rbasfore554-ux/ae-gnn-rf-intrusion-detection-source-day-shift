@@ -169,7 +169,7 @@ The experiment is computationally heavy: the AE processes the training split in 
 - 100,000 sampled GNN training nodes and 100,000 validation graph nodes; all 565,536 test flows in the test graph.
 - The GNN uses a k-NN graph computed within each split. The test evaluation therefore represents a graph over the held-out test cohort, not a fully streaming per-flow production evaluation.
 - The held-out test partition was used to compare multiple ablation/fusion variants. Consequently, treat the reported table as an exploratory benchmark; a new source-day-held-out or external test is needed for a strong unbiased estimate after model selection.
-- Per-attack breakdowns, multiple-seed confidence intervals, latency, throughput, and adversarial robustness have not been established.
+- Source-day and attack-family breakdowns are reported in the additional exploratory analysis. Multiple-seed confidence intervals, latency, throughput, and adversarial robustness have not been established.
 - The AE was trained on the full training split, which contains both benign and attack traffic; it was **not trained exclusively on benign traffic** in this experiment.
 
 See [Reproducibility](docs/REPRODUCIBILITY.md) and [Research status](docs/RESEARCH_STATUS.md) for workflow and next steps.
