@@ -19,11 +19,10 @@ The Friday source-day stress test trains on Monday–Thursday, then evaluates on
 ## Remaining work — in order
 
 1. Run a diagnostic against the original Thursday Morning WebAttacks CSV. Review missing values per column, infinities, label mix before/after filtering, and exact duplicates. Do not alter historical results silently.
-2. Perform a cross-dataset compatibility audit for CSE-CIC-IDS2018 (or another external labelled-flow dataset). Map names, definitions and units to the frozen 72-feature schema before evaluating. Never fit preprocessing or choose thresholds using external test labels.
-3. If a valid frozen-model feature map is defensible, run external evaluation once, report failures as well as successes, and archive feature maps/hashes/metrics. If not, state that cross-dataset evaluation is not valid with the current frozen schema.
-4. Repeat the aligned protocol across multiple seeds and report confidence intervals.
-5. Measure time, peak memory, and inference protocol constraints; current GCN builds a graph over the complete evaluation cohort, so it is offline cohort inference, not streaming.
-6. Complete manuscript authorship/declarations and target-journal formatting after supervisor review.
+2. Keep external-dataset evaluation (for example, CIC-IDS2018) as explicitly stated future work; it is outside the scope of the current single-dataset manuscript.
+3. Decide whether repeated-seed confidence intervals are feasible without changing the frozen protocol; if run, document them as within-dataset robustness checks, not external validation.
+4. Measure time, peak memory, and inference protocol constraints if feasible; current GCN builds a graph over the complete evaluation cohort, so it is offline cohort inference, not streaming.
+5. Complete manuscript authorship/declarations and target-journal formatting after supervisor review.
 
 ## Guardrails
 
