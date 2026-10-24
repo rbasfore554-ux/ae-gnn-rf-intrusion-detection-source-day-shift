@@ -1,0 +1,9 @@
+source_file,day,raw_rows,retained_after_missing_inf_removal,removed_by_missing_inf_rule,benign_before_dedup,attack_before_dedup,attack_percent_before_dedup,unique_rows_after_dedup,benign_after_dedup,attack_after_dedup,duplicate_rows_removed
+Monday-WorkingHours.pcap_ISCX.csv,Monday,529918,529481,437,529481,0,0.000000,529450,529450,0,31
+Tuesday-WorkingHours.pcap_ISCX.csv,Tuesday,445909,445645,264,431813,13832,3.103816,445641,431809,13832,4
+Wednesday-workingHours.pcap_ISCX.csv,Wednesday,692703,691406,1297,439683,251723,36.407408,691390,439668,251722,16
+Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,Thursday,458968,170231,288737,168051,2180,1.280613,170230,168050,2180,1
+Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv,Thursday,288602,288395,207,288359,36,0.012483,288253,288217,36,142
+Friday-WorkingHours-Morning.pcap_ISCX.csv,Friday,191033,190911,122,188955,1956,1.024561,190909,188953,1956,2
+Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv,Friday,286467,286096,371,127292,158804,55.507242,286095,127291,158804,1
+Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv,Friday,225745,225711,34,97686,128025,56.720762,225709,97684,128025,2
