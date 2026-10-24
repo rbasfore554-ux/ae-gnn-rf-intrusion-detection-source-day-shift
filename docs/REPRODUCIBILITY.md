@@ -43,3 +43,8 @@ Friday was inspected in earlier exploration. This run must be described as a sou
 ## Current high-priority data-quality check
 
 The run removed 288,737 of 458,968 records from the Thursday Morning WebAttacks source CSV under the all-column missing/non-finite rule. Before reinterpreting or changing preprocessing, audit the original CSV and review per-column missingness, infinity counts and label composition before/after filtering. The raw dataset is not included in this repository.
+
+
+## Scope decision
+
+The current manuscript is intentionally limited to CIC-IDS2017. Evaluation on CIC-IDS2018 or another dataset is future work, not a required task for this submission. The Friday run is reported as an exploratory within-dataset source-day stress test and must not be described as independent external validation.
