@@ -30,3 +30,16 @@ The full experiment is memory- and compute-intensive. The notebook uses full-bat
 - `results/cicids2017_*_audit.csv`: observed counts from the cleaning audit.
 
 Notebook code is provided for transparency. The package was not re-executed end-to-end during preparation, so saved CSVs should be treated as the recorded project outputs, not as freshly verified outputs from this packaging step.
+
+
+## Friday source-day stress test (additional run)
+
+Notebook path in the local project package: hybrid_ae_gnn_rf_friday_source_day_holdout_v1.ipynb. This run used seed 42, Monday–Thursday development rows, an 80/20 stratified train/validation split, 100,000 graph nodes for GNN training and validation, and all 702,713 Friday rows as the test cohort. It trained fresh AE/GCN/RF artifacts for that source-day protocol.
+
+Recorded outputs in the local project folder include source_day_holdout_metrics_f2.csv, source_day_holdout_attack_family_recall.csv, source_day_holdout_fixed_recall.csv, source_day_holdout_config.json and source_day_cleaning_audit.csv. The GitHub summary is in docs/FRIDAY_SOURCE_DAY_HOLDOUT_AUDIT.md.
+
+Friday was inspected in earlier exploration. This run must be described as a source-day stress test, not an untouched independent confirmation. It evaluates a graph built over the full Friday cohort, so it is not a streaming test.
+
+## Current high-priority data-quality check
+
+The run removed 288,737 of 458,968 records from the Thursday Morning WebAttacks source CSV under the all-column missing/non-finite rule. Before reinterpreting or changing preprocessing, audit the original CSV and review per-column missingness, infinity counts and label composition before/after filtering. The raw dataset is not included in this repository.
