@@ -1,0 +1,41 @@
+{
+  "experiment_id": "friday_source_day_holdout_dev_mon_thu_seed42",
+  "purpose": "source-day generalisation stress test; not an untouched independent confirmation",
+  "seed": 42,
+  "development_days": [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday"
+  ],
+  "test_day": "Friday",
+  "development_split": "80/20 stratified by binary label into train/validation",
+  "train_rows": 1699971,
+  "validation_rows": 424993,
+  "validation_graph_nodes": 100000,
+  "test_rows": 702713,
+  "binary_feature_count_after_train_only_constant_filter": 72,
+  "latent_dim": 32,
+  "knn_k": 10,
+  "gnn_train_nodes": 100000,
+  "gnn_hidden_dim": 16,
+  "gnn_epochs": 20,
+  "gnn_learning_rate": 0.01,
+  "rf_estimators": 100,
+  "rf_max_depth": 15,
+  "rf_n_jobs": 2,
+  "decision_thresholds_f2_validation": {
+    "AE (reconstruction error)": 0.9467251896858215,
+    "AE+RF [Z,re]": 0.4018267707993046,
+    "AE+GNN": 0.21901148557662964,
+    "AE+GNN+RF [H]": 0.4687496531471265,
+    "AE+GNN+RF [Z,H]": 0.40123589861009484,
+    "AE+GNN+RF [Z,re,H]": 0.4250944930467649
+  },
+  "attack_families_unseen_in_training": [
+    "Bot",
+    "DDoS",
+    "PortScan"
+  ],
+  "caveat": "Friday data were inspected in prior random-split experiments; treat this as exploratory source-day stress test, then validate externally for stronger claims."
+}
