@@ -16,7 +16,7 @@ The notebook also evaluates an H-only RF baseline and a supplementary `[Z || rec
 
 ## Archived result for [Z || H] (separate experiment protocol)
 
-The final recorded fusion run evaluated **565,536 test flows** using a validation-selected decision threshold of **0.4221336**.
+This archived fusion run evaluated **565,536 test flows** using a validation-selected decision threshold of **0.4221336**.
 
 | Metric | Result |
 |---|---:|
