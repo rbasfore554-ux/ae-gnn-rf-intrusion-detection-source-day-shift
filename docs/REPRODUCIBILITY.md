@@ -47,4 +47,4 @@ The run removed 288,737 of 458,968 records from the Thursday Morning WebAttacks 
 
 ## Scope decision
 
-The current manuscript is intentionally limited to CIC-IDS2017. Evaluation on CIC-IDS2018 or another dataset is future work, not a required task for this submission. The Friday run is reported as an exploratory within-dataset source-day stress test and must not be described as independent external validation.
+The current manuscript is intentionally limited to CIC-IDS2017. Evaluation on any additional dataset is future work, not a required task for this submission. The Friday run is reported as an exploratory within-dataset source-day stress test and must not be described as independent external validation.
