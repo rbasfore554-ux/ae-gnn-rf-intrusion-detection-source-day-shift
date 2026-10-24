@@ -59,7 +59,7 @@ All metrics below come from the recorded benchmark runs. The `model_comparison.c
 
 ![Model comparison chart](figures/model_comparison.png)
 
-**Interpretation of the archived comparison:** adding Z back to the GNN embedding improves the H-only hybrid in that run, but **AE+RF remains stronger overall** on the listed aggregate metrics. Later aligned and source-day experiments are separate protocols summarized below. Fixed-recall and attack-family analyses have now been run; external validation and the Thursday cleaning audit remain open.
+**Interpretation of the archived comparison:** adding Z back to the GNN embedding improves the H-only hybrid in that run, but **AE+RF remains stronger overall** on the listed aggregate metrics. Later aligned and source-day experiments are separate protocols summarized below. Fixed-recall and attack-family analyses have now been run; the Thursday cleaning audit remains open. Cross-dataset evaluation is future work, not a requirement for this manuscript.
 
 
 ## Aligned comparison and Friday source-day stress test
@@ -96,7 +96,7 @@ At the F2-selected validation thresholds, all evaluated models missed about 72â€
 
 At a validation target recall of 98.8%, test recall was 25.96% for AE+RF [Z,re] (FPR 0.64%) and 26.86% for full fusion [Z,re,H] (FPR 0.71%). Direct AE+GNN reached 99.77% recall but produced a 96.80% FPR. Threshold transfer therefore failed for this source-day shift.
 
-See docs/FRIDAY_SOURCE_DAY_HOLDOUT_AUDIT.md for interpretation and limitations. The GCN graph is built across the whole evaluation cohort, so this is offline cohort inference, not a streaming evaluation. External dataset validation, repeated-seed confidence intervals, and latency/throughput measurements are still outstanding.
+See docs/FRIDAY_SOURCE_DAY_HOLDOUT_AUDIT.md for interpretation and limitations. The GCN graph is built across the whole evaluation cohort, so this is offline cohort inference, not a streaming evaluation. Repeated-seed confidence intervals and latency/throughput measurements are possible additional checks. Cross-dataset validation is future work outside this manuscript's scope.
 
 ## Dataset and preprocessing audit
 
@@ -168,7 +168,7 @@ The experiment is computationally heavy: the AE processes the training split in 
 - Thresholds selected on validation data by maximizing F2.
 - 100,000 sampled GNN training nodes and 100,000 validation graph nodes; all 565,536 test flows in the test graph.
 - The GNN uses a k-NN graph computed within each split. The test evaluation therefore represents a graph over the held-out test cohort, not a fully streaming per-flow production evaluation.
-- The held-out test partition was used to compare multiple ablation/fusion variants. Consequently, treat the reported table as an exploratory benchmark; a new source-day-held-out or external test is needed for a strong unbiased estimate after model selection.
+- The held-out test partition was used to compare multiple ablation/fusion variants. Consequently, treat the reported table as an exploratory benchmark. Because model and feature choices were influenced by prior inspection of the available CIC-IDS2017 data, this manuscript will not claim a pristine confirmatory estimate or cross-dataset generalisation.
 - Source-day and attack-family breakdowns are reported in the additional exploratory analysis. Multiple-seed confidence intervals, latency, throughput, and adversarial robustness have not been established.
 - The AE was trained on the full training split, which contains both benign and attack traffic; it was **not trained exclusively on benign traffic** in this experiment.
 
