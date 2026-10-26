@@ -79,6 +79,8 @@ All variants used a shared 100,000-node validation sample and the same 565,536-f
 | AE+GNN+RF [Z,H] | 97.81% | 90.87% | 98.82% | 94.68% | 0.9982 | 2.43% | 1.19% |
 | AE+GNN+RF [Z,re,H] | 97.71% | 90.31% | 98.98% | 94.45% | 0.9982 | 2.60% | 1.02% |
 
+The full aligned comparison, including validation thresholds, validation metrics, confusion-matrix counts, and average precision, is recorded in [`results/aligned_random_split_metrics_f2.csv`](results/aligned_random_split_metrics_f2.csv). Columns ending in `_pct` are percentages; ROC-AUC and Average Precision are fractions from 0 to 1; TN, FP, FN, and TP are counts.
+
 ### Friday source-day stress test (exploratory)
 
 AE/GCN/RF were fitted on Monday–Thursday development data; thresholds were selected on development validation; and all 702,713 Friday flows were evaluated as one cohort. Friday was inspected in earlier experiments, so this is a stress test rather than untouched independent confirmation. Bot (1,956 rows), DDoS (128,025 rows), and PortScan (158,804 rows) were absent from the Monday–Thursday development pool.
@@ -136,6 +138,7 @@ Do not upload the raw dataset files or generated large model files to GitHub.
 ├── .gitignore
 ├── notebooks/
 │   ├── 01_full_experiment_pipeline.ipynb
+│   ├── 01_results_and_metrics_audit.ipynb
 │   └── 02_cicids2017_cleaning_audit.ipynb
 ├── figures/
 │   ├── architecture_72d_zh_fusion.png
@@ -146,6 +149,8 @@ Do not upload the raw dataset files or generated large model files to GitHub.
 ├── results/
 │   ├── final_model_metrics.csv
 │   ├── model_comparison.csv
+│   ├── aligned_random_split_metrics_f2.csv
+│   ├── supplementary_zh_re_variant.csv
 │   ├── friday_source_day_holdout_config.json
 │   ├── friday_source_day_holdout_metrics_f2.csv
 │   ├── friday_source_day_holdout_attack_family_recall.csv
