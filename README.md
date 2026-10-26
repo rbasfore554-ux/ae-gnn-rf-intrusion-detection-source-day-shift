@@ -59,7 +59,7 @@ All metrics below come from the recorded benchmark runs. The `model_comparison.c
 
 ![Model comparison chart](figures/model_comparison.png)
 
-**Interpretation of the archived comparison:** adding Z back to the GNN embedding improves the H-only hybrid in that run, but **AE+RF remains stronger overall** on the listed aggregate metrics. Later aligned and source-day experiments are separate protocols summarized below. Fixed-recall and attack-family analyses have now been run; the Thursday cleaning audit remains open. Cross-dataset evaluation is future work, not a requirement for this manuscript.
+**Interpretation of the archived comparison:** adding Z back to the GNN embedding improves the H-only hybrid in that run, but **AE+RF remains stronger overall** on the listed aggregate metrics. Later aligned and source-day experiments are separate protocols summarized below. Fixed-recall and attack-family analyses have been run, and the Thursday source-file cleaning audit is complete; the findings are summarized below. Cross-dataset evaluation is future work, not a requirement for this manuscript.
 
 
 ## Aligned comparison and Friday source-day stress test
@@ -118,7 +118,7 @@ The recorded preprocessing audit is:
 
 The 76 non-constant feature columns exclude four non-numeric identifiers/time fields (`Flow ID`, `Source IP`, `Destination IP`, `Timestamp`), leaving 72 numeric model inputs.
 
-### ### Data-quality audit (completed)
+### Data-quality audit (completed)
 
 A follow-up audit of `Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv` parsed 458,968 records across 85 fields and found 288,602 records that were entirely blank, including the Label field. Those records contain no labelled traffic to recover. Another 135 labelled BENIGN records contained infinite numeric values, of which 20 also had a missing `Flow Bytes/s` value. The invalid-row union excluded 288,737 records and retained 170,231 labelled records before de-duplication: 168,051 BENIGN and 2,180 attacks (1,507 Brute Force, 21 SQL Injection and 652 XSS). The source-file audit recorded one duplicate row removed in de-duplication, leaving 170,230 records from this file. No row had a wrong CSV field count and no whitespace-only cells were reported. The large exclusion count is therefore predominantly blank CSV records, not discarded labelled attack flows.
 
@@ -146,10 +146,19 @@ Do not upload the raw dataset files or generated large model files to GitHub.
 ├── results/
 │   ├── final_model_metrics.csv
 │   ├── model_comparison.csv
-│   └── CIC-IDS2017 audit CSVs
+│   ├── friday_source_day_holdout_config.json
+│   ├── friday_source_day_holdout_metrics_f2.csv
+│   ├── friday_source_day_holdout_attack_family_recall.csv
+│   ├── friday_source_day_recall_target_0.988.csv
+│   ├── friday_source_day_cleaning_audit.csv
+│   ├── thursday_webattacks_audit_summary.csv
+│   ├── thursday_webattacks_label_counts.csv
+│   ├── thursday_webattacks_excluded_rows.csv
+│   └── other CIC-IDS2017 audit CSVs
 └── docs/
     ├── REPRODUCIBILITY.md
-    └── RESEARCH_STATUS.md
+    ├── RESEARCH_STATUS.md
+    └── FRIDAY_SOURCE_DAY_HOLDOUT_AUDIT.md
 ```
 
 ## Run the experiment
