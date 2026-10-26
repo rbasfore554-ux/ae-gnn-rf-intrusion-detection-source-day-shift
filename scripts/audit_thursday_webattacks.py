@@ -22,6 +22,9 @@ def label_text(value):
     if pd.isna(value):
         return "<MISSING_LABEL>"
     value = str(value).strip()
+    # The source's 0x96 dash byte is decoded as U+0096 under latin-1.
+    # Normalize only the audit label text for readable CSV output.
+    value = value.replace(chr(0x96), "–")
     return value if value else "<BLANK_LABEL>"
 
 
