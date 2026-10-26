@@ -26,7 +26,9 @@ The full experiment is memory- and compute-intensive. The notebook uses full-bat
 ## What the published CSVs mean
 
 - `results/final_model_metrics.csv`: recorded final AE–GNN–RF `[Z || H]` fusion run.
-- `results/model_comparison.csv`: recorded ablation/fusion comparison. Metric scores are fractions from 0 to 1; TN, FP, FN and TP are counts.
+- `results/model_comparison.csv`: archived ablation/fusion comparison. Metric scores are fractions from 0 to 1; TN, FP, FN and TP are counts.
+- `results/aligned_random_split_metrics_f2.csv`: aligned six-model random-split comparison, including validation-selected thresholds, validation metrics, test metrics, and confusion-matrix counts. Columns ending in `_pct` are percentages; ROC-AUC and Average Precision are fractions from 0 to 1.
+- `results/supplementary_zh_re_variant.csv`: supplementary `[Z || reconstruction error || H]` result from its separate recorded run.
 - `results/cicids2017_*_audit.csv`: observed counts from the cleaning audit.
 
 Notebook code is provided for transparency. The package was not re-executed end-to-end during preparation, so saved CSVs should be treated as the recorded project outputs, not as freshly verified outputs from this packaging step.
