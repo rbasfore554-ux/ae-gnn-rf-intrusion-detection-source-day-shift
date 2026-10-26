@@ -1,0 +1,6 @@
+label,raw_rows,retained_before_filter_rows,excluded_by_missing_or_infinity_rows
+<MISSING_LABEL>,288602,0,288602
+BENIGN,168186,168051,135
+"Web Attack  Brute Force",1507,1507,0
+"Web Attack  Sql Injection",21,21,0
+"Web Attack  XSS",652,652,0
