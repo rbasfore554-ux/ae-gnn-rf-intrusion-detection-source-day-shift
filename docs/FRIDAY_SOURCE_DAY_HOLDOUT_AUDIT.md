@@ -8,7 +8,7 @@ This document summarizes the frozen Friday source-day experiment. Monday–Thurs
 
 ## Main finding
 
-At model-specific thresholds selected by maximizing F2 on the Monday–Thursday validation sample, attack recall on Friday ranges from 26.99% to 27.95% for the evaluated supervised/AE-RF variants. The false-negative rate is approximately 72–73% for those variants. This is a major distribution-shift/generalization warning and must be reported alongside the high random-split scores.
+At model-specific thresholds selected by maximizing F2 on the Monday–Thursday validation sample, attack recall on Friday ranges from 26.99% to 27.95% across the six evaluated models. The false-negative rate is approximately 72–73% for those variants. This is a major distribution-shift/generalization warning and must be reported alongside the high random-split scores.
 
 | Model | Accuracy | Attack precision | Attack recall | F1 | ROC-AUC | FPR | FNR |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -25,7 +25,7 @@ Bot (1,956 flows), DDoS (128,025) and PortScan (158,804) were not represented in
 
 ## Threshold-transfer sensitivity
 
-At a validation target recall of 98.8%, Friday test recall for AE+RF [Z,re] was only 25.96% (FPR 0.64%); full fusion [Z,re,H] reached 26.86% recall (FPR 0.71%). Direct AE+GNN reached 99.77% recall but with 96.80% FPR. The chosen operating point did not transfer reliably to Friday. See results/friday_source_day_fixed_recall_0988.csv.
+At a validation target recall of 98.8%, Friday test recall for AE+RF [Z,re] was only 25.96% (FPR 0.64%); full fusion [Z,re,H] reached 26.86% recall (FPR 0.71%). Direct AE+GNN reached 99.77% recall but with 96.80% FPR. The chosen operating point did not transfer reliably to Friday. See results/friday_source_day_recall_target_0.988.csv.
 
 ## Aligned random-split benchmark
 
