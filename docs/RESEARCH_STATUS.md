@@ -16,13 +16,17 @@ The Friday source-day stress test trains on Monday–Thursday, then evaluates on
 - Frozen source-day configuration and result tables audited; summary is in docs/FRIDAY_SOURCE_DAY_HOLDOUT_AUDIT.md.
 - Thursday Morning WebAttacks CSV audit completed. The 288,602 missing-label rows were entirely blank across all 85 fields. A further 135 labelled BENIGN records had infinite numeric values (20 also had a missing Flow Bytes/s value). The retained pre-dedup file subset comprised 168,051 BENIGN and 2,180 attack flows; the source-file cleaning audit recorded one duplicate row removed. This explains the high exclusion count as predominantly blank CSV records rather than labelled attacks. Compact audit summaries are in results/thursday_webattacks_audit_summary.csv, results/thursday_webattacks_label_counts.csv and results/thursday_webattacks_excluded_rows.csv.
 
-## Remaining work — in order
+## Repository review status
 
-1. Reconcile the manuscript's methods, thresholds, tables, and figures against the saved experiment artifacts; avoid mixing values from separate protocols.
-2. Verify the public result tables and documentation in the open pull request against the uploaded CSVs before merging it.
-3. If compute allows, repeat the aligned within-dataset protocol across multiple seeds and report uncertainty; this is an optional robustness check, not external validation.
-4. Measure time, peak memory, and inference protocol constraints if feasible; the current GCN builds a graph over the complete evaluation cohort, so it is offline cohort inference, not streaming.
-5. Complete author details, funding/competing-interest/AI-use declarations, data/code availability and target-journal formatting. The target journal and its instructions for authors must be selected before final submission formatting.
+- Manuscript metrics and decision thresholds have been reconciled against the available saved experiment artifacts, including aligned and Friday confusion-matrix counts, F2 thresholds, fixed-validation-recall sensitivity results, and Friday attack-family counts. This is an artifact-consistency audit, not a fresh end-to-end experiment rerun or independent validation.
+- The PR's public CSVs and documentation have been checked. The README's stale “audit remains open” wording and duplicate heading marker were corrected; the Friday fixed-recall report path was aligned with the actual repository filename.
+- No commit status checks or pull-request workflow runs were present for the reviewed head SHA. This documentation/results change does not rerun model training.
+
+## Remaining work beyond this repository update
+
+1. If compute allows, repeat the aligned within-dataset protocol across multiple seeds and report uncertainty; this is an optional robustness check, not external validation.
+2. Measure time, peak memory, and inference protocol constraints if feasible; the current GCN builds a graph over the complete evaluation cohort, so it is offline cohort inference, not streaming.
+3. Complete manuscript author details, funding/competing-interest/AI-use declarations, data/code availability and target-journal formatting after the target journal and its instructions for authors are selected. These are manuscript-submission tasks, not blockers for documenting the current research status.
 
 ## Scope decision
 
