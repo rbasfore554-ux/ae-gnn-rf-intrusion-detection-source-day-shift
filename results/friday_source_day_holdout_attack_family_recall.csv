@@ -1,0 +1,19 @@
+Model,Attack_family,Samples,Detected_as_attack,Missed_as_benign,Attack_family_recall,Threshold_F2_validation,Family_seen_in_training,Evaluation_note
+AE (reconstruction error),Bot,1956,99,1857,0.050613,0.946725,False,Friday held-out stress test; family was not seen in development
+AE (reconstruction error),DDoS,128025,79083,48942,0.617715,0.946725,False,Friday held-out stress test; family was not seen in development
+AE (reconstruction error),PortScan,158804,1535,157269,0.009666,0.946725,False,Friday held-out stress test; family was not seen in development
+AE+RF [Z,re],Bot,1956,0,1956,0.000000,0.401827,False,Friday held-out stress test; family was not seen in development
+AE+RF [Z,re],DDoS,128025,77775,50250,0.607499,0.401827,False,Friday held-out stress test; family was not seen in development
+AE+RF [Z,re],PortScan,158804,157,158647,0.000989,0.401827,False,Friday held-out stress test; family was not seen in development
+AE+GNN,Bot,1956,0,1956,0.000000,0.219011,False,Friday held-out stress test; family was not seen in development
+AE+GNN,DDoS,128025,80334,47691,0.627487,0.219011,False,Friday held-out stress test; family was not seen in development
+AE+GNN,PortScan,158804,83,158721,0.000523,0.219011,False,Friday held-out stress test; family was not seen in development
+AE+GNN+RF [H],Bot,1956,1,1955,0.000511,0.468750,False,Friday held-out stress test; family was not seen in development
+AE+GNN+RF [H],DDoS,128025,78234,49791,0.611084,0.468750,False,Friday held-out stress test; family was not seen in development
+AE+GNN+RF [H],PortScan,158804,544,158260,0.003426,0.468750,False,Friday held-out stress test; family was not seen in development
+AE+GNN+RF [Z,H],Bot,1956,0,1956,0.000000,0.401236,False,Friday held-out stress test; family was not seen in development
+AE+GNN+RF [Z,H],DDoS,128025,77948,50077,0.608850,0.401236,False,Friday held-out stress test; family was not seen in development
+AE+GNN+RF [Z,H],PortScan,158804,155,158649,0.000976,0.401236,False,Friday held-out stress test; family was not seen in development
+AE+GNN+RF [Z,re,H],Bot,1956,0,1956,0.000000,0.425094,False,Friday held-out stress test; family was not seen in development
+AE+GNN+RF [Z,re,H],DDoS,128025,78128,49897,0.610256,0.425094,False,Friday held-out stress test; family was not seen in development
+AE+GNN+RF [Z,re,H],PortScan,158804,154,158650,0.000970,0.425094,False,Friday held-out stress test; family was not seen in development

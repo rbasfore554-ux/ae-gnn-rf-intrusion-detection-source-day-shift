@@ -30,3 +30,22 @@ The full experiment is memory- and compute-intensive. The notebook uses full-bat
 - `results/cicids2017_*_audit.csv`: observed counts from the cleaning audit.
 
 Notebook code is provided for transparency. The package was not re-executed end-to-end during preparation, so saved CSVs should be treated as the recorded project outputs, not as freshly verified outputs from this packaging step.
+
+
+## Friday source-day stress test (additional run)
+
+Notebook path in the local project package: hybrid_ae_gnn_rf_friday_source_day_holdout_v1.ipynb. This run used seed 42, Monday–Thursday development rows, an 80/20 stratified train/validation split, 100,000 graph nodes for GNN training and validation, and all 702,713 Friday rows as the test cohort. It trained fresh AE/GCN/RF artifacts for that source-day protocol.
+
+Recorded local experiment artifacts include source_day_holdout_metrics_f2.csv, source_day_holdout_attack_family_recall.csv, source_day_holdout_fixed_recall.csv, source_day_holdout_config.json and source_day_cleaning_audit.csv. The corresponding public repository summaries are results/friday_source_day_holdout_metrics_f2.csv, results/friday_source_day_holdout_attack_family_recall.csv, results/friday_source_day_recall_target_0.988.csv, results/friday_source_day_holdout_config.json and results/friday_source_day_cleaning_audit.csv. The interpretation and limitations are documented in docs/FRIDAY_SOURCE_DAY_HOLDOUT_AUDIT.md.
+
+Friday was inspected in earlier exploration. This run must be described as a source-day stress test, not an untouched independent confirmation. It evaluates a graph built over the full Friday cohort, so it is not a streaming test.
+
+## Thursday Morning WebAttacks source-file audit (completed)
+
+A direct read-only audit of the original source CSV found 458,968 parsed records across 85 columns. Exactly 288,602 rows were entirely blank across all fields, including Label. The audit counted 135 labelled BENIGN records with infinite numeric values; 20 of those also had a missing Flow Bytes/s value. The invalid-row union excluded 288,737 rows and retained 170,231 labelled records before de-duplication (168,051 BENIGN, 2,180 attacks). The prior source-file cleaning audit records one duplicate removed, leaving 170,230 rows from this file after de-duplication. Zero rows had wrong field counts. Compact summary files are provided in results/thursday_webattacks_audit_summary.csv, results/thursday_webattacks_label_counts.csv, and results/thursday_webattacks_excluded_rows.csv. The raw CSV remains excluded from the public repository.
+
+This explains the large exclusion count as predominantly completely blank CSV records. It does not resolve the separate evaluation caveats: Friday was previously inspected, unseen attack-family effects are confounded with source-day shift, and inference remains offline cohort-based.
+
+## Scope decision
+
+The current manuscript is intentionally limited to CIC-IDS2017. Evaluation on any additional dataset is future work, not a required task for this submission. The Friday run is reported as an exploratory within-dataset source-day stress test and must not be described as independent external validation.
