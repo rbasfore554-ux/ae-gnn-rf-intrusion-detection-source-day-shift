@@ -160,6 +160,8 @@ Do not upload the raw dataset files or generated large model files to GitHub.
 │   ├── thursday_webattacks_label_counts.csv
 │   ├── thursday_webattacks_excluded_rows.csv
 │   └── other CIC-IDS2017 audit CSVs
+├── scripts/
+│   └── audit_thursday_webattacks.py
 └── docs/
     ├── REPRODUCIBILITY.md
     ├── RESEARCH_STATUS.md
