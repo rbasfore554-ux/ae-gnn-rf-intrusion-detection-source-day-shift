@@ -14,7 +14,7 @@ The Friday source-day stress test trains on Monday–Thursday, then evaluates on
 - Friday attack-family recall for Bot, DDoS and PortScan.
 - Confusion-matrix and metric consistency checks for the six Friday models.
 - Frozen source-day configuration and result tables audited; summary is in docs/FRIDAY_SOURCE_DAY_HOLDOUT_AUDIT.md.
-- Thursday Morning WebAttacks CSV audit completed. The 288,602 missing-label rows were entirely blank across all 85 fields. A further 135 labelled BENIGN records had infinite numeric values (20 also had a missing Flow Bytes/s value). The retained pre-dedup file subset comprised 168,051 BENIGN and 2,180 attack flows; the source-file cleaning audit recorded one duplicate row removed. This explains the high exclusion count as predominantly blank CSV records rather than labelled attacks.
+- Thursday Morning WebAttacks CSV audit completed. The 288,602 missing-label rows were entirely blank across all 85 fields. A further 135 labelled BENIGN records had infinite numeric values (20 also had a missing Flow Bytes/s value). The retained pre-dedup file subset comprised 168,051 BENIGN and 2,180 attack flows; the source-file cleaning audit recorded one duplicate row removed. This explains the high exclusion count as predominantly blank CSV records rather than labelled attacks. Compact audit summaries are in results/thursday_webattacks_audit_summary.csv, results/thursday_webattacks_label_counts.csv and results/thursday_webattacks_excluded_rows.csv.
 
 ## Remaining work — in order
 
