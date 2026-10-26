@@ -2,7 +2,7 @@
 
 ## Current evidence and supported conclusion
 
-The repository contains multiple recorded protocols. Keep the archived random-split run, the later aligned random-split comparison, and the Friday source-day stress test in separate tables; thresholds and metrics from one run must not be substituted into another.
+This repository contains multiple recorded protocols. Keep the archived random-split run, the later aligned random-split comparison, and the Friday source-day stress test in separate tables; thresholds and metrics from one run must not be substituted into another.
 
 In the newer aligned random-split comparison (565,536 test flows), AE+RF [Z,re] has the strongest overall aggregate metrics among the RF variants: accuracy 97.97%, precision 91.51%, recall 98.87%, F1 95.05%, ROC-AUC 0.9984 and FPR 2.25%. AE–GNN–RF [Z,re,H] reaches 98.98% recall, but its precision (90.31%), F1 (94.45%), accuracy (97.71%) and FPR (2.60%) are worse. The random test partition was inspected during prior exploration, so this result is exploratory.
 
@@ -13,16 +13,20 @@ The Friday source-day stress test trains on Monday–Thursday, then evaluates on
 - Fixed-validation-recall sensitivity comparison at targets 0.980, 0.985, 0.988, 0.989 and 0.990.
 - Friday attack-family recall for Bot, DDoS and PortScan.
 - Confusion-matrix and metric consistency checks for the six Friday models.
-- Frozen source-day configuration and result tables audited locally; summary is in docs/FRIDAY_SOURCE_DAY_HOLDOUT_AUDIT.md.
-- Thursday source-file cleaning anomaly documented: 288,737 of 458,968 rows from Thursday Morning WebAttacks were excluded by the all-column missing/non-finite filter. The excluded rows' detailed missingness and label composition still require audit on the original source CSV.
+- Frozen source-day configuration and result tables audited; summary is in docs/FRIDAY_SOURCE_DAY_HOLDOUT_AUDIT.md.
+- Thursday Morning WebAttacks CSV audit completed. The 288,602 missing-label rows were entirely blank across all 85 fields. A further 135 labelled BENIGN records had infinite numeric values (20 also had a missing Flow Bytes/s value). The retained pre-dedup file subset comprised 168,051 BENIGN and 2,180 attack flows; the source-file cleaning audit recorded one duplicate row removed. This explains the high exclusion count as predominantly blank CSV records rather than labelled attacks.
 
 ## Remaining work — in order
 
-1. Run scripts/audit_thursday_webattacks.py against the original Thursday Morning WebAttacks CSV. Review missing values per column, infinities, label mix before/after filtering, CSV field-count mismatches, and duplicate fingerprints. Verify any duplicate finding exactly if it affects a conclusion. Do not alter historical results silently.
-2. Keep evaluation on other datasets as future work; the current manuscript is intentionally limited to CIC-IDS2017.
-3. Decide whether repeated-seed confidence intervals are feasible without changing the frozen protocol; if run, document them as within-dataset robustness checks, not external validation.
-4. Measure time, peak memory, and inference protocol constraints if feasible; current GCN builds a graph over the complete evaluation cohort, so it is offline cohort inference, not streaming.
-5. Complete manuscript authorship/declarations and target-journal formatting after supervisor review.
+1. Reconcile the manuscript's methods, thresholds, tables, and figures against the saved experiment artifacts; avoid mixing values from separate protocols.
+2. Verify the public result tables and documentation in the open pull request against the uploaded CSVs before merging it.
+3. If compute allows, repeat the aligned within-dataset protocol across multiple seeds and report uncertainty; this is an optional robustness check, not external validation.
+4. Measure time, peak memory, and inference protocol constraints if feasible; the current GCN builds a graph over the complete evaluation cohort, so it is offline cohort inference, not streaming.
+5. Complete author details, funding/competing-interest/AI-use declarations, data/code availability and target-journal formatting. The target journal and its instructions for authors must be selected before final submission formatting.
+
+## Scope decision
+
+The current manuscript is intentionally limited to CIC-IDS2017. Evaluation on additional datasets is future work, not a requirement for this version. The Friday run is a source-day stress test, not an untouched independent confirmation.
 
 ## Guardrails
 
