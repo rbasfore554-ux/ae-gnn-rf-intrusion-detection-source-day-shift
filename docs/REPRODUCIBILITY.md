@@ -40,10 +40,11 @@ Recorded outputs in the local project folder include source_day_holdout_metrics_
 
 Friday was inspected in earlier exploration. This run must be described as a source-day stress test, not an untouched independent confirmation. It evaluates a graph built over the full Friday cohort, so it is not a streaming test.
 
-## Current high-priority data-quality check
+## Thursday Morning WebAttacks source-file audit (completed)
 
-The run removed 288,737 of 458,968 records from the Thursday Morning WebAttacks source CSV under the all-column missing/non-finite rule. Before reinterpreting or changing preprocessing, audit the original CSV and review per-column missingness, infinity counts and label composition before/after filtering. The raw dataset is not included in this repository.
+A direct read-only audit of the original source CSV found 458,968 parsed records across 85 columns. Exactly 288,602 rows were entirely blank across all fields, including Label. The audit counted 135 labelled BENIGN records with infinite numeric values; 20 of those also had a missing Flow Bytes/s value. The invalid-row union excluded 288,737 rows and retained 170,231 labelled records before de-duplication (168,051 BENIGN, 2,180 attacks). The prior source-file cleaning audit records one duplicate removed, leaving 170,230 rows from this file after de-duplication. Zero rows had wrong field counts. Compact summary files are provided in results/thursday_webattacks_audit_summary.csv, results/thursday_webattacks_label_counts.csv, and results/thursday_webattacks_excluded_rows.csv. The raw CSV remains excluded from the public repository.
 
+This explains the large exclusion count as predominantly completely blank CSV records. It does not resolve the separate evaluation caveats: Friday was previously inspected, unseen attack-family effects are confounded with source-day shift, and inference remains offline cohort-based.
 
 ## Scope decision
 
