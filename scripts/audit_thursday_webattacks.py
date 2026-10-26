@@ -30,21 +30,24 @@ def audit(source: Path, out: Path, chunksize: int = 25000):
         raise FileNotFoundError(source)
     out.mkdir(parents=True, exist_ok=True)
 
-    # Independent CSV-parser check: the header and every non-empty record
-    # should have the same number of fields.
+    # Independent CSV-parser check: distinguish physically empty lines from records
+    # whose fields are all empty. Count field widths for every non-empty CSV record.
     width_counts = Counter()
-    blank_records = 0
-    with source.open("r", encoding="utf-8-sig", errors="replace", newline="") as f:
+    rows_all_fields_empty = 0
+    physically_blank_lines = 0
+    with source.open("r", encoding="latin1", newline="") as f:
         reader = csv.reader(f)
         try:
             header = [str(c).strip() for c in next(reader)]
         except StopIteration:
             raise ValueError("CSV is empty")
         for row in reader:
-            if not row or all(str(v).strip() == "" for v in row):
-                blank_records += 1
-            else:
-                width_counts[len(row)] += 1
+            if not row:
+                physically_blank_lines += 1
+                continue
+            width_counts[len(row)] += 1
+            if all(str(v).strip() == "" for v in row):
+                rows_all_fields_empty += 1
     wrong_width = sum(n for width, n in width_counts.items() if width != len(header))
 
     totals = Counter()
@@ -60,7 +63,7 @@ def audit(source: Path, out: Path, chunksize: int = 25000):
 
     # Read as strings so chunk-to-chunk dtype inference cannot change fingerprints.
     for chunk_no, df in enumerate(pd.read_csv(
-        source, chunksize=chunksize, dtype="string", encoding="utf-8-sig",
+        source, chunksize=chunksize, dtype="string", encoding="latin1",
         keep_default_na=True, on_bad_lines="error"
     )):
         df.columns = [str(c).strip() for c in df.columns]
@@ -160,10 +163,11 @@ def audit(source: Path, out: Path, chunksize: int = 25000):
         "raw_repeated_row_fingerprints_not_proven_exact": int(totals["repeated_fingerprints_raw"]),
         "retained_repeated_row_fingerprints_not_proven_exact": int(totals["repeated_fingerprints_retained"]),
         "rows_with_whitespace_only_cells": int(totals["rows_any_whitespace_only"]),
-        "blank_csv_records": int(blank_records),
-        "csv_rows_with_wrong_field_count": int(wrong_width),
+        "rows_all_fields_empty_from_csv_reader": int(rows_all_fields_empty),
+        "physically_blank_csv_lines": int(physically_blank_lines),
+        "csv_records_with_wrong_field_count": int(wrong_width),
         "label_column": label_col,
-        "note": "Diagnostic only; does not modify source data or retrain models. Fingerprints are 64-bit hashes and are not proof of exact duplicate equality."
+        "note": "Diagnostic only; does not modify source data or retrain models. All-fields-empty records are not the same as physically blank lines. Fingerprints are 64-bit hashes and are not proof of exact duplicate equality."
     }
 
     pd.DataFrame([{"metric": k, "value": v} for k, v in summary.items()]).to_csv(out / "row_filter_summary.csv", index=False)
@@ -197,8 +201,8 @@ def audit(source: Path, out: Path, chunksize: int = 25000):
         "Audit outputs: row_filter_summary.csv; column_missingness_and_numeric_audit.csv; "
         "label_counts_before_after_filter.csv; excluded_rows_by_reason_and_label.csv; audit_summary.json.\\n"
         "This is a diagnostic audit. It does not modify the source CSV or retrain models. "
-        "Whitespace-only cells are reported separately because pandas dropna does not remove them by default. "
-        "Row fingerprints are 64-bit hashes, not proof of exact duplicate equality.\\n",
+        "All-fields-empty records are counted separately from physically blank lines. "
+        "Whitespace-only cells are reported separately. Row fingerprints are 64-bit hashes, not proof of exact duplicate equality.\\n",
         encoding="utf-8"
     )
     return summary
