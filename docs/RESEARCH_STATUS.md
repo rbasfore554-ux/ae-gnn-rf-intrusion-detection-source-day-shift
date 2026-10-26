@@ -19,7 +19,7 @@ The Friday source-day stress test trains on Monday–Thursday, then evaluates on
 ## Repository review status
 
 - Manuscript metrics and decision thresholds have been reconciled against the available saved experiment artifacts, including aligned and Friday confusion-matrix counts, F2 thresholds, fixed-validation-recall sensitivity results, and Friday attack-family counts. This is an artifact-consistency audit, not a fresh end-to-end experiment rerun or independent validation.
-- The PR's public CSVs and documentation have been checked. The README's stale “audit remains open” wording and duplicate heading marker were corrected; the Friday fixed-recall report path was aligned with the actual repository filename.
+- The repository's public CSVs and documentation have been checked. The README's stale audit status and duplicate heading marker were corrected; the Friday fixed-recall report path was aligned with the actual repository filename. The aligned six-model metrics are available in `results/aligned_random_split_metrics_f2.csv`.
 - No commit status checks or pull-request workflow runs were present for the reviewed head SHA. This documentation/results change does not rerun model training.
 
 ## Remaining work beyond this repository update
