@@ -118,11 +118,13 @@ The recorded preprocessing audit is:
 
 The 76 non-constant feature columns exclude four non-numeric identifiers/time fields (`Flow ID`, `Source IP`, `Destination IP`, `Timestamp`), leaving 72 numeric model inputs.
 
-### Data-quality audit (completed)
+### ### Data-quality audit (completed)
 
-A follow-up audit of `Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv` parsed 458,968 records across 85 fields and found 288,602 records that were entirely blank, including the Label field. Those records contain no labelled traffic to recover. Another 135 labelled BENIGN records contained infinite numeric values, of which 20 also had a missing `Flow Bytes/s` value. Therefore, the invalid-row union excluded 288,737 records and retained 170,231 labelled records before de-duplication: 168,051 BENIGN and 2,180 attacks (1,507 Brute Force, 21 SQL Injection and 652 XSS). The source-file audit recorded one duplicate row removed in de-duplication, leaving 170,230 records from this file. No row had a wrong CSV field count and no whitespace-only cells were reported. This explains the large exclusion count as predominantly blank CSV records, not discarded labelled attack flows.
+A follow-up audit of `Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv` parsed 458,968 records across 85 fields and found 288,602 records that were entirely blank, including the Label field. Those records contain no labelled traffic to recover. Another 135 labelled BENIGN records contained infinite numeric values, of which 20 also had a missing `Flow Bytes/s` value. The invalid-row union excluded 288,737 records and retained 170,231 labelled records before de-duplication: 168,051 BENIGN and 2,180 attacks (1,507 Brute Force, 21 SQL Injection and 652 XSS). The source-file audit recorded one duplicate row removed in de-duplication, leaving 170,230 records from this file. No row had a wrong CSV field count and no whitespace-only cells were reported. The large exclusion count is therefore predominantly blank CSV records, not discarded labelled attack flows.
 
-Audit CSVs in `results/` document the observed counts. Do not upload the raw dataset files or generated large model files to GitHub.
+Compact audit summaries are versioned in `results/thursday_webattacks_audit_summary.csv`, `results/thursday_webattacks_label_counts.csv`, and `results/thursday_webattacks_excluded_rows.csv`. The raw source CSV and detailed per-column output are not bundled.
+
+Do not upload the raw dataset files or generated large model files to GitHub.
 
 ## Repository layout
 
