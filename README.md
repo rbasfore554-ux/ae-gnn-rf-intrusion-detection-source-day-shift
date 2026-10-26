@@ -1,4 +1,4 @@
-# Hybrid AE–GNN–RF Intrusion Detection (CIC-IDS2017)
+# Evaluating an Integrated Autoencoder–GNN–Random Forest Framework for Network Intrusion Detection Under Source-Day Shift
 
 An experimental research implementation of network intrusion detection using an Autoencoder (AE), a k-nearest-neighbour (k-NN) graph, a Graph Convolutional Network (GCN), and a Random Forest (RF) classifier.
 
