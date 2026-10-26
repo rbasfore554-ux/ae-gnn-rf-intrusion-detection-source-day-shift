@@ -40,9 +40,11 @@ The aligned random-split benchmark used the same 565,536-flow test partition acr
 | AE+GNN+RF [Z,H] | 97.81% | 90.87% | 98.82% | 94.68% | 0.9982 | 2.43% | 1.19% |
 | AE+GNN+RF [Z,re,H] | 97.71% | 90.31% | 98.98% | 94.45% | 0.9982 | 2.60% | 1.02% |
 
-## Open data-quality gate
+## Thursday source-file cleaning audit: completed
 
-The current source-day cleaning procedure removes 288,737 of 458,968 rows from Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv because of missing or non-finite values. The source audit shows 288,622 rows with at least one missing value, 135 rows with at least one numeric infinity, and 20 rows in both groups. The cause and label composition of excluded rows still require review on the original CSV. Do not silently change the filter or reinterpret the Friday experiment before this audit is complete.
+The uploaded read-only audit output confirms that 288,602 of the 288,737 excluded records were entirely blank across all 85 fields, including Label. These records do not contain labelled network flows. The remaining 135 excluded rows were labelled BENIGN and contained infinite numeric values; 20 also had a missing Flow Bytes/s value. The file had 458,968 parsed records, 85 fields, zero wrong-field-count rows, and no whitespace-only cells. After the invalid-row filter, 170,231 labelled rows remained before de-duplication (168,051 BENIGN and 2,180 attacks). The source-file cleaning audit records one duplicate removed, leaving 170,230 rows from the file.
+
+The observed large exclusion count is therefore explained predominantly by completely blank CSV records, and no labelled attack rows from this source file were removed by the missing/non-finite filter. Preserve the preprocessing description in the paper and do not silently alter the historical experiment. A repeated retained-row 64-bit fingerprint was also reported; treat the fingerprint as a candidate rather than proof of equality, although the source-file cleaning audit records one duplicate removed by the original de-duplication step.
 
 ## Interpretation limits
 
